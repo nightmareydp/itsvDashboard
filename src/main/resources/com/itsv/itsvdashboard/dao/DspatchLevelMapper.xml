@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.DspatchLevelMapper" >
+    <!--查询分派级别 -->
+    <select id="getLevel"  resultType="java.lang.String"  parameterType="java.lang.String" >
+        SELECT LEVEL AS level
+        FROM t_dspatch_level
+        WHERE ASSIGNED_LEVEL_3_DEPARTMENT = #{assignedLevel3Department}
+        	AND ASSIGNED_PERSON = #{assignedPerson};
+    </select>
+</mapper>

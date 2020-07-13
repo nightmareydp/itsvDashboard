@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.SlaMapper" >
+    <!--计算标准处理时长 -->
+    <select id="getSSla"  resultType="java.lang.Integer"  parameterType="java.lang.String" >
+        SELECT s_sla AS sSla
+        FROM t_sla
+        WHERE l_level = #{lLevel}
+        	AND p_level = #{pLevel};
+    </select>
+</mapper>

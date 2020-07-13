@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.ItsvWeekTwentyThreeMapper" >
+    <!--查询每人处理单量TOP10(本周) -->
+    <select id="getWorkload"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto" >
+        SELECT
+            assigned_person as name,
+            count(*) as num
+        FROM
+            t_itsv_23
+        GROUP BY
+            name
+        ORDER BY
+            num desc
+        LIMIT
+            0,10
+    </select>
+    <!--查询系统单量TOP10(本周) -->
+    <select id="getSystemNum"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto" >
+        SELECT
+            system_classification_level_2 as name,
+            count(*) as num
+        FROM
+            t_itsv_23
+        GROUP BY
+            name
+        ORDER BY
+            num desc
+        LIMIT
+            0,10
+    </select>
+    <!--本周产品线事件单周占比 -->
+    <select id="getProductLine"  resultType="com.itsv.itsvdashboard.dto.ThreeNumDto" >
+        SELECT
+            sp.product_line AS name,
+            COUNT(*) AS num,
+            COUNT(*) / (
+		            SELECT COUNT(*)
+		            FROM t_itsv_23
+		            WHERE state != '已取消') AS bili
+        FROM t_itsv_23 t
+        	LEFT JOIN t_system_product sp
+        	    ON t.system_classification_level_2 = sp.system_classification_level_2
+        		AND t.system_classification_level_3 = sp.system_classification_level_3
+        	LEFT JOIN t_event_type et
+        	    ON t.event_classification_level_2 = et.event_classification_level_2
+        		AND t.event_classification_level_3 = et.event_classification_level_3
+        WHERE (t.state != '已取消'
+        	AND t.first_service_desk = '职能研发部服务台'
+        	AND et.m_event_type IN ('日常维护', '系统问题', '咨询、建议', '用户问题'))
+        GROUP BY name
+        HAVING name IN ('桌面运维','财务','企业应用','网络','企业效率','其他','流程中心')
+        ORDER BY num DESC
+    </select>
+    <!--查询满意度 -->
+    <select id="getSatisfaction"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto" >
+        SELECT CASE
+        		WHEN (attitude_score * timeliness_score = 25) THEN '满意'
+        		WHEN (attitude_score * timeliness_score = 16 or attitude_score * timeliness_score = 20) THEN '一般'
+        		ELSE '不满意'
+        	END AS name,
+        	COUNT(*) AS num
+        FROM t_itsv_23
+        WHERE state != '已取消'
+        GROUP BY name
+    </select>
+
+    <!--获取SLA相关数据 -->
+    <select id="getSlaData"  resultType="com.itsv.itsvdashboard.dto.SlaDto">
+        SELECT  id AS id,
+                submission_time AS submissionTime,
+                SUBSTRING(submission_time,12,2) AS submissionHours,
+                IFNULL(resolution_time,DATE_FORMAT(submission_date,'%Y-%m-%d 23:59:59')) AS resolutionTime,
+                submission_date AS submissionDate,
+                DATE_FORMAT(submission_date, '%Y-%m-%d 09:00:00') AS todayNine
+        FROM t_itsv_23
+        WHERE state != '已取消'
+    </select>
+    <!--判断日期类型 -->
+    <select id="isWorkDay"  resultType="java.lang.String"  parameterType="java.util.Date" >
+        SELECT date_type
+        FROM t_day
+        WHERE date = #{date}
+    </select>
+    <!--获取下一个工作日(9点) -->
+    <select id="getNextWorkDay"  resultType="java.util.Date"  parameterType="java.util.Date" >
+        SELECT DATE_FORMAT(date, '%Y-%m-%d 09:00:00') AS date
+        FROM t_day
+        WHERE date > #{date}
+        	AND date_type = '工作日'
+        LIMIT 1
+    </select>
+    <!-- 获取标准处理时长 -->
+    <select id="getStandard"  resultType="java.lang.Integer"  parameterType="java.lang.String" >
+        SELECT IFNULL(s.s_sla,72)
+        FROM t_itsv_23 a
+        	LEFT JOIN t_dspatch_level b
+        	ON a.assigned_level_3_department = b.assigned_level_3_department
+        		AND IFNULL(a.assigned_person, 'null') = IFNULL(b.assigned_person, 'null')
+        	LEFT JOIN t_sla s
+        	ON level = s.l_level
+        		AND a.priority = s.p_level
+        WHERE a.id = #{id}
+    </select>
+
+    <!-- 提取所需字段 -->
+    <select id="getNeedCol"  resultType="com.itsv.itsvdashboard.dto.CleanDataDto" >
+        SELECT  id AS id,
+                reception AS reception,
+                assigned_person AS assignedPerson,
+                assigned_level_3_department AS assignedLevel3Department,
+                priority AS priority,
+                system_classification_level_2 AS systemClassificationLevel2,
+                system_classification_level_3 AS systemClassificationLevel3,
+                report_source AS reportSource,
+                attitude_score AS attitudeScore,
+                timeliness_score AS timelinessScore,
+                event_classification_level_2 AS eventClassificationLevel2,
+                event_classification_level_3 AS eventClassificationLevel3,
+                DATE_FORMAT(submission_date, '%Y-%m-%d') AS submissionDate,
+                SUBSTRING(submission_time,12,2) AS submissionHours,
+                submission_time AS submissionTime,
+                resolution_time AS resolutionTime
+        FROM t_itsv_23
+    </select>
+
+</mapper>

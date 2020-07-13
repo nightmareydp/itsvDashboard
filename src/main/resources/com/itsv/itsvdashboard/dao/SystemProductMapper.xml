@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.SystemProductMapper" >
+    <!-- 计算产品线 -->
+    <select id="getProductLine"  resultType="java.lang.String"  parameterType="java.lang.String" >
+        SELECT product_line AS productLine
+        FROM t_system_product
+        WHERE system_classification_level_2 = #{systemClassificationLevel2}
+        	AND system_classification_level_3 = #{systemClassificationLevel3};
+    </select>
+    <!-- 计算产品标签 -->
+    <select id="getProductTag"  resultType="java.lang.String"  parameterType="java.lang.String" >
+        SELECT product_tag AS productTag
+        FROM t_system_product
+        WHERE system_classification_level_2 = #{systemClassificationLevel2}
+        	AND system_classification_level_3 = #{systemClassificationLevel3};
+    </select>
+</mapper>

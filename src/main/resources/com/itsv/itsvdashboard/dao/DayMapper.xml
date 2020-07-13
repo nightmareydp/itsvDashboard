@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.DayMapper" >
+    <!-- 计算日期类型 -->
+    <select id="getDateType"  resultType="java.lang.String"  parameterType="java.util.Date" >
+        SELECT date_type AS dateType
+        FROM t_day
+        WHERE date = #{date}
+    </select>
+    <!-- 计算当日9点 -->
+    <select id="getTodayNine"  resultType="java.util.Date"  parameterType="java.util.Date" >
+        SELECT DATE_FORMAT(date, '%Y-%m-%d 09:00:00') AS todayNine
+        FROM t_day
+        WHERE date = #{date}
+    </select>
+    <!-- 下一个工作日(9点) -->
+    <select id="getNextWorkDay"  resultType="java.util.Date"  parameterType="java.util.Date" >
+        SELECT DATE_FORMAT(date, '%Y-%m-%d 09:00:00') AS nextWorkDay
+        FROM t_day
+        WHERE date > #{date}
+        	AND date_type = '工作日'
+        LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.IntermediateMapper" >
+    <!-- 将清洗后数据插入中间表（并添加id防重） -->
+    <insert id="setIntermediate" parameterType="java.util.List" >
+        INSERT INTO t_intermediate (id, reception, assigned_person, assigned_level_3_department, priority
+        	, system_classification_level_2, system_classification_level_3, report_source, attitude_score, timeliness_score
+        	, event_classification_level_2, event_classification_level_3, submission_time, resolution_time, submission_date
+        	, submission_hours, today_nine, next_work_day, submission_time_new, processing_time
+        	, day_type, s_sla, is_ok, is_satisfied, level
+        	, product_line, product_tag, report_source_new, m_event_type, s_event_type)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id}, #{item.reception}, #{item.assignedPerson}, #{item.assignedLevel3Department}, #{item.priority}
+            , #{item.systemClassificationLevel2}, #{item.systemClassificationLevel3}, #{item.reportSource}, #{item.attitudeScore}, #{item.timelinessScore}
+            , #{item.eventClassificationLevel2}, #{item.eventClassificationLevel3}, #{item.submissionTime}, #{item.resolutionTime}, #{item.submissionDate}
+            , #{item.submissionHours}, #{item.todayNine}, #{item.nextWorkDay}, #{item.submissionTimeNew}, #{item.processingTime}
+            , #{item.dateType}, #{item.sSla}, #{item.isOk}, #{item.satisfied}, #{item.level}
+            , #{item.productLine}, #{item.productTag}, #{item.newSource}, #{item.mEventType}, #{item.sEventType})
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+            id=values(id),
+            reception=values(reception),
+            assigned_person=values(assigned_person),
+            assigned_level_3_department=values(assigned_level_3_department),
+            priority=values(priority),
+            system_classification_level_2=values(system_classification_level_2),
+            system_classification_level_3=values(system_classification_level_3),
+            report_source=values(report_source),
+            attitude_score=values(attitude_score),
+            timeliness_score=values(timeliness_score),
+            event_classification_level_2=values(event_classification_level_2),
+            event_classification_level_3=values(event_classification_level_3),
+            submission_time=values(submission_time),
+            resolution_time=values(resolution_time),
+            submission_date=values(submission_date),
+            submission_hours=values(submission_hours),
+            today_nine=values(today_nine),
+            next_work_day=values(next_work_day),
+            submission_time_new=values(submission_time_new),
+            processing_time=values(processing_time),
+            day_type=values(day_type),
+            s_sla=values(s_sla),
+            is_ok=values(is_ok),
+            is_satisfied=values(is_satisfied),
+            level=values(level),
+            product_line=values(product_line),
+            product_tag=values(product_tag),
+            report_source_new=values(report_source_new),
+            m_event_type=values(m_event_type),
+            s_event_type=values(s_event_type);
+    </insert>
+    <!--查询总量趋势 -->
+    <select id="getTotalTrend"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto" >
+        SELECT  submission_date AS name,
+                COUNT(1) AS num
+        FROM t_intermediate
+        GROUP BY submission_date
+        ORDER BY submission_date DESC
+        LIMIT 0, 10;
+    </select>
+    <!--查询满意度 -->
+    <select id="getSatisfaction"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto" >
+        SELECT  is_satisfied AS name,
+                COUNT(1) AS num
+        FROM t_intermediate
+        GROUP BY is_satisfied;
+    </select>
+    <!--获取SLA -->
+    <select id="getSla"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto">
+        SELECT is_ok AS name, COUNT(1) AS num
+        FROM t_intermediate
+        GROUP BY is_ok;
+    </select>
+</mapper>

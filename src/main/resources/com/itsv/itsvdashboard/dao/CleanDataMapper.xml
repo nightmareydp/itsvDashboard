@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.CleanDataMapper" >
+    <!--查询分派级别 -->
+    <select id="getLevel"  resultType="java.lang.Integer"  parameterType="java.lang.String" >
+        SELECT CASE
+        		WHEN (#{attitudeScore} * #{timelinessScore} = 25) THEN '满意'
+        		WHEN (#{attitudeScore} * #{timelinessScore} = 16 or #{attitudeScore} * #{timelinessScore} = 20) THEN '一般'
+        		ELSE '不满意'
+        	END AS is_satisfied
+        FROM t_itsv_23
+    </select>
+    <!--查询满意度 -->
+    <select id="getSatisfaction"  resultType="java.lang.Integer"  parameterType="java.lang.String" >
+        SELECT CASE
+        		WHEN (#{attitudeScore} * #{timelinessScore} = 25) THEN '满意'
+        		WHEN (#{attitudeScore} * #{timelinessScore} = 16 or #{attitudeScore} * #{timelinessScore} = 20) THEN '一般'
+        		ELSE '不满意'
+        	END AS is_satisfied
+        FROM t_itsv_23
+    </select>
+</mapper>
