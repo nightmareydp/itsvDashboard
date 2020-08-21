@@ -110,7 +110,7 @@ public class CleanDataDto {
     /**
      * 处理时长
      */
-    private Long processingTime;
+    private Double processingTime;
 
     /**
      * 日期类型

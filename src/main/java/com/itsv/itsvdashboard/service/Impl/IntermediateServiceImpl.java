@@ -44,13 +44,12 @@ public class IntermediateServiceImpl implements IntermediateService {
     public List<CleanDataDto> getAllData() {
         return itsvWeekTwentyThreeMapper.getNeedCol();
     }
-
     /**
      * 清洗全量数据
      * @return CleanDataDto
      */
     @Override
-    public void getCleanAllData() {
+    public void CleanAllData() {
 
         //插入数据（清洗数据（获取全量数据））
         intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getAllData()));
@@ -62,7 +61,60 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistory.setOperator("于铎朋");
         cleanTaskHistory.setOperatorErp("yuduopeng");
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
+    }
 
+    /**
+     * 获取当前时间至上一次洗数的数据
+     * @return CleanDataDto
+     */
+    @Override
+    public List<CleanDataDto> getNeedColToLastTime() {
+        return itsvWeekTwentyThreeMapper.getNeedColToLastTime(cleanTaskHistoryMapper.getLastCleanTime(),new Date());
+    }
+    /**
+     * 清洗当前时间至上一次洗数的数据
+     * @return CleanDataDto
+     */
+    @Override
+    public void CleanToLastTimeData() {
+
+        //插入数据（清洗数据（获取当前时间至上一次洗数的数据））
+        intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getNeedColToLastTime()));
+        //记录操作记录
+        CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
+        cleanTaskHistory.setId(UUID.randomUUID().toString());
+        cleanTaskHistory.setCleanType("手动清洗数据");
+        cleanTaskHistory.setDate(new Date());
+        cleanTaskHistory.setOperator("于铎朋");
+        cleanTaskHistory.setOperatorErp("yuduopeng");
+        cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
+    }
+
+    /**
+     * 获取自定义时间的数据
+     * @return CleanDataDto
+     */
+    @Override
+    public List<CleanDataDto> getNeedColSetupTime(Date stateTime,Date endTime) {
+        return itsvWeekTwentyThreeMapper.getNeedColSetupTime(stateTime,endTime);
+    }
+    /**
+     * 清洗自定义时间的数据
+     * @return CleanDataDto
+     */
+    @Override
+    public void CleanSetupTimeData(Date stateTime,Date endTime) {
+
+        //插入数据（清洗数据（获取自定义时间的数据））
+        intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getNeedColSetupTime(stateTime,endTime)));
+        //记录操作记录
+        CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
+        cleanTaskHistory.setId(UUID.randomUUID().toString());
+        cleanTaskHistory.setCleanType("自定义清洗数据");
+        cleanTaskHistory.setDate(new Date());
+        cleanTaskHistory.setOperator("于铎朋");
+        cleanTaskHistory.setOperatorErp("yuduopeng");
+        cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
     }
 
     /**

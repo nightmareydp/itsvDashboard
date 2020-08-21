@@ -136,7 +136,7 @@ public class Intermediate {
      * 处理时长
      */
     @Column(name = "processing_time")
-    private Long processingTime;
+    private Double processingTime;
 
     /**
      * 日期类型

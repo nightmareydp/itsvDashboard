@@ -20,61 +20,22 @@ import java.util.List;
 public interface ItsvWeekTwentyThreeMapper extends Mapper<ItsvWeekTwentyThree> {
 
     /**
-     * 查询每人处理单量
-     * @return list
-     */
-    List<TwoNumDto> getWorkload();
-
-    /**
-     * 查询系统单量TOP10
-     * @return list
-     */
-    List<TwoNumDto> getSystemNum();
-
-    /**
-     * 本周产品线事件单周占比
-     * @return list
-     */
-    List<ThreeNumDto> getProductLine();
-
-    /**
-     * 查询满意度
-     * @return list
-     */
-    List<TwoNumDto> getSatisfaction();
-
-    /**
-     * 判断日期类型
-     * @param date 提交日期
-     * @return 日期类型
-     */
-    String isWorkDay(Date date);
-
-    /**
-     * 获取下一个工作日(9点)
-     * @param date 提交日期
-     * @return 日期
-     */
-    Date getNextWorkDay(Date date);
-
-    /**
-     * 获取SLA相关数据
-     * @return list
-     */
-    List<SlaDto> getSlaData();
-
-    /**
-     * 获取标准处理时长
-     * @param id 工单号
-     * @return 时长
-     */
-    Integer getStandard(String id);
-
-    /**
-     * 获取SLA相关数据
+     * 获取全量数据
      * @return list
      */
     List<CleanDataDto> getNeedCol();
+
+    /**
+     * 获取当前时间至上一次洗数的数据
+     * @return list
+     */
+    List<CleanDataDto> getNeedColToLastTime(Date stateTime,Date endTime);
+
+    /**
+     * 获取自定义时间的数据
+     * @return list
+     */
+    List<CleanDataDto> getNeedColSetupTime(Date stateTime,Date endTime);
 
 
 }

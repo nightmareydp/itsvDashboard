@@ -28,51 +28,6 @@ public class ItsvWeekTwentyThreeController {
 
 
 
-    /**
-     * 查询每人处理单量
-     * @return list
-     */
-    @GetMapping(value="/getWorkload")
-    public List<TwoNumDto> getWorkload() {
-        return itsvWeekTwentyThreeService.getWorkload();
-    }
-
-    /**
-     * 查询系统单量TOP10
-     * @return list
-     */
-    @GetMapping(value="/getSystemNum")
-    public List<TwoNumDto> getSystemNum() {
-        return itsvWeekTwentyThreeService.getSystemNum();
-    }
-
-    /**
-     * 本周产品线事件单周占比
-     * @return list
-     */
-    @GetMapping(value="/getProductLine")
-    public List<ThreeNumDto> getProductLine() {
-        return itsvWeekTwentyThreeService.getProductLine();
-    }
-
-    /**
-     * 查询满意度
-     * @return list
-     */
-    @GetMapping(value="/getSatisfaction")
-    public List<TwoNumDto> getSatisfaction() {
-        return itsvWeekTwentyThreeService.getSatisfaction();
-    }
-
-
-    /**
-     * 查询SLA达标率
-     * @return list
-     */
-    @GetMapping(value="/getSLA")
-    public List<TwoNumDto> getSLA() {
-        return itsvWeekTwentyThreeService.getSLA();
-    }
 
 
 

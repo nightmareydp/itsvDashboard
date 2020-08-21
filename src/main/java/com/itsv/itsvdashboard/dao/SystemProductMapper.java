@@ -3,6 +3,8 @@ package com.itsv.itsvdashboard.dao;
 import com.itsv.itsvdashboard.domain.SystemProduct;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * @Author yuduopeng
  * @date 2020/7/11
@@ -26,4 +28,10 @@ public interface SystemProductMapper extends Mapper<SystemProduct> {
      * @return 产品标签
      */
     String getProductTag(String systemClassificationLevel2,String systemClassificationLevel3);
+
+    /**
+     * 查询所有
+     * @return list
+     */
+    List<SystemProduct> getAll();
 }

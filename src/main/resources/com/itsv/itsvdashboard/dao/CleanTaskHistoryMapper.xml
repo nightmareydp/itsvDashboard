@@ -10,6 +10,7 @@
     <select id="getLastCleanTime"  resultType="java.util.Date" >
         SELECT date
         FROM t_clean_task_history
+        WHERE clean_type != '自定义清洗数据'
         ORDER BY date DESC
         LIMIT 1;
     </select>

@@ -125,7 +125,7 @@ public class CleanDataServiceImpl implements CleanDataService {
             //获取解决时间(默认当前时间)
             Date resolutionTime = cleanDataDto.getResolutionTime() == null ? new Date() : cleanDataDto.getResolutionTime();
             //结算解决时长(转化为小时计算)
-            Long processingTime = (resolutionTime.getTime() - submissionTimeNew.getTime()) / (1000 * 60 * 60);
+            Double processingTime = Double.valueOf((resolutionTime.getTime() - submissionTimeNew.getTime())) / (1000 * 60 * 60);
             cleanDataDto.setProcessingTime(processingTime);
             if (processingTime <= sSla ){
                 cleanDataDto.setIsOk("达标");

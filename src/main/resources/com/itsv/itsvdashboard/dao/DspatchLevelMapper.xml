@@ -8,4 +8,11 @@
         WHERE ASSIGNED_LEVEL_3_DEPARTMENT = #{assignedLevel3Department}
         	AND ASSIGNED_PERSON = #{assignedPerson};
     </select>
+    <!-- 查询所有 -->
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.DspatchLevel" >
+        SELECT ASSIGNED_LEVEL_3_DEPARTMENT AS assignedLevel3Department,
+            ASSIGNED_PERSON AS assignedPerson,
+            LEVEL AS level
+        FROM t_dspatch_level;
+    </select>
 </mapper>

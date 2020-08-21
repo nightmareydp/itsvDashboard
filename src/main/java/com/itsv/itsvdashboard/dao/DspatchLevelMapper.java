@@ -3,6 +3,8 @@ package com.itsv.itsvdashboard.dao;
 import com.itsv.itsvdashboard.domain.DspatchLevel;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * @Author yuduopeng
  * @date 2020/7/11
@@ -18,4 +20,10 @@ public interface DspatchLevelMapper extends Mapper<DspatchLevel> {
      * @return 分派级别
      */
     String getLevel(String assignedLevel3Department,String assignedPerson);
+
+    /**
+     * 查询所有
+     * @return list
+     */
+    List<DspatchLevel> getAll();
 }
