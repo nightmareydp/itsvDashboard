@@ -15,6 +15,12 @@ import javax.persistence.Table;
 public class SystemProduct {
 
     /**
+     * id
+     */
+    @Column(name = "id")
+    private Integer id;
+
+    /**
      * 事件分类层二
      */
     @Column(name = "system_classification_level_2")

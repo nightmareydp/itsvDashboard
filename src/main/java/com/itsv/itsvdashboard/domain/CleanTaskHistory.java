@@ -19,7 +19,7 @@ public class CleanTaskHistory {
      * id
      */
     @Column(name = "id")
-    private String id;
+    private Integer id;
 
     /**
      * 操作性质

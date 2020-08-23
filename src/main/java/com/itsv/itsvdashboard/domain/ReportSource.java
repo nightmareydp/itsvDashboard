@@ -15,6 +15,12 @@ import javax.persistence.Table;
 public class ReportSource {
 
     /**
+     * id
+     */
+    @Column(name = "id")
+    private Integer id;
+
+    /**
      * 报告来源
      */
     @Column(name = "report_source")

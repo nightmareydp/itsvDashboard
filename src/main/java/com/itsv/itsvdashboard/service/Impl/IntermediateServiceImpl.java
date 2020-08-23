@@ -55,7 +55,7 @@ public class IntermediateServiceImpl implements IntermediateService {
         intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getAllData()));
         //记录操作记录
         CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
-        cleanTaskHistory.setId(UUID.randomUUID().toString());
+//        cleanTaskHistory.setId(UUID.randomUUID().toString());
         cleanTaskHistory.setCleanType("全量清洗数据");
         cleanTaskHistory.setDate(new Date());
         cleanTaskHistory.setOperator("于铎朋");
@@ -82,7 +82,7 @@ public class IntermediateServiceImpl implements IntermediateService {
         intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getNeedColToLastTime()));
         //记录操作记录
         CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
-        cleanTaskHistory.setId(UUID.randomUUID().toString());
+//        cleanTaskHistory.setId(UUID.randomUUID().toString());
         cleanTaskHistory.setCleanType("手动清洗数据");
         cleanTaskHistory.setDate(new Date());
         cleanTaskHistory.setOperator("于铎朋");
@@ -109,7 +109,7 @@ public class IntermediateServiceImpl implements IntermediateService {
         intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getNeedColSetupTime(stateTime,endTime)));
         //记录操作记录
         CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
-        cleanTaskHistory.setId(UUID.randomUUID().toString());
+//        cleanTaskHistory.setId(UUID.randomUUID().toString());
         cleanTaskHistory.setCleanType("自定义清洗数据");
         cleanTaskHistory.setDate(new Date());
         cleanTaskHistory.setOperator("于铎朋");

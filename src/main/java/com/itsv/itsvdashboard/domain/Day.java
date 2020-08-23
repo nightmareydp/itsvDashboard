@@ -19,7 +19,7 @@ public class Day {
      * id
      */
     @Column(name = "id")
-    private String id;
+    private Integer id;
 
     /**
      * 日期

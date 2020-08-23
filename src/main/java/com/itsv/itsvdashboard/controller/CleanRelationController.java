@@ -37,7 +37,7 @@ public class CleanRelationController {
     }
 
     /**
-     * 查询所有(产品线关系)
+     * 查询所有(处理级别)
      */
     @GetMapping(value="/getDspatchLevelAllData")
     public List<DspatchLevel> getDspatchLevelAllData() {

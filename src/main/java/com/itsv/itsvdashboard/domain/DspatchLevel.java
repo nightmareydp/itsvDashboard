@@ -15,6 +15,12 @@ import javax.persistence.Table;
 public class DspatchLevel {
 
     /**
+     * id
+     */
+    @Column(name = "id")
+    private Integer id;
+
+    /**
      * 受派三级部门
      */
     @Column(name = "ASSIGNED_LEVEL_3_DEPARTMENT")

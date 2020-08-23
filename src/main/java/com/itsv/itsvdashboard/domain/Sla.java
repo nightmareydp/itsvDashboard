@@ -15,6 +15,12 @@ import javax.persistence.Table;
 public class Sla {
 
     /**
+     * id
+     */
+    @Column(name = "id")
+    private Integer id;
+
+    /**
      * 分派级别
      */
     @Column(name = "l_level")

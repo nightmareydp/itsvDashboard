@@ -16,8 +16,9 @@
         	AND system_classification_level_3 = #{systemClassificationLevel3};
     </select>
     <!-- 查询所有 -->
-    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.DspatchLevel" >
-        SELECT system_classification_level_2 AS eventClassificationLevel2,
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.SystemProduct" >
+        SELECT id AS id,
+            system_classification_level_2 AS eventClassificationLevel2,
             system_classification_level_3 AS eventClassificationLevel3,
             product_line AS productLine,
             product_tag AS productTag
