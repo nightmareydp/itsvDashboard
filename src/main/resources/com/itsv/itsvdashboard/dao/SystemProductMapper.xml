@@ -18,10 +18,44 @@
     <!-- 查询所有 -->
     <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.SystemProduct" >
         SELECT id AS id,
-            system_classification_level_2 AS eventClassificationLevel2,
-            system_classification_level_3 AS eventClassificationLevel3,
+            system_classification_level_2 AS systemClassificationLevel2,
+            system_classification_level_3 AS systemClassificationLevel3,
             product_line AS productLine,
             product_tag AS productTag
         FROM t_system_product;
     </select>
+    <!-- 新增数据 -->
+    <insert id="setNewData"  parameterType="java.lang.String" >
+        INSERT INTO t_system_product(
+            system_classification_level_2,
+            system_classification_level_3,
+            product_line,
+            product_tag
+        )
+        VALUES (
+            #{systemClassificationLevel2},
+            #{systemClassificationLevel3},
+            #{productLine},
+            #{productTag}
+        )
+    </insert>
+    <!-- 新增数据 -->
+    <update id="updateData"  parameterType="java.lang.String" >
+        UPDATE
+            t_system_product
+        SET
+            system_classification_level_2 = #{systemClassificationLevel2},
+            system_classification_level_3 = #{systemClassificationLevel3},
+            product_line = #{productLine},
+            product_tag = #{productTag}
+        WHERE
+            id = #{id}
+    </update>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_system_product
+        WHERE
+            id = #{id}
+    </delete>
 </mapper>

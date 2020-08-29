@@ -34,4 +34,20 @@ public interface SystemProductMapper extends Mapper<SystemProduct> {
      * @return list
      */
     List<SystemProduct> getAll();
+
+    /**
+     * 新增数据
+     */
+    void setNewData(String systemClassificationLevel2,String systemClassificationLevel3,String productLine,String productTag);
+
+    /**
+     * 更新数据
+     */
+    void updateData(String systemClassificationLevel2,String systemClassificationLevel3,String productLine,String productTag,String id);
+
+    /**
+     * 删除数据
+     */
+    void deleteData(String id);
+
 }

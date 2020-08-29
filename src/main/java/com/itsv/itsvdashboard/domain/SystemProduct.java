@@ -24,13 +24,13 @@ public class SystemProduct {
      * 事件分类层二
      */
     @Column(name = "system_classification_level_2")
-    private String eventClassificationLevel2;
+    private String systemClassificationLevel2;
 
     /**
      * 事件分类层三
      */
     @Column(name = "system_classification_level_3")
-    private String eventClassificationLevel3;
+    private String systemClassificationLevel3;
 
     /**
      * 产品线

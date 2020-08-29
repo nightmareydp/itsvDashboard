@@ -7,6 +7,7 @@ import com.itsv.itsvdashboard.domain.SystemProduct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -35,6 +36,27 @@ public class CleanRelationController {
     public List<SystemProduct> getSystemProductAllData() {
         return systemProductMapper.getAll();
     }
+    /**
+     * 新增数据(产品线关系)
+     */
+    @GetMapping(value="/setSystemProductNewData")
+    public void setSystemProductNewData(@RequestParam() String systemClassificationLevel2,String systemClassificationLevel3,String productLine,String productTag) {
+        systemProductMapper.setNewData(systemClassificationLevel2, systemClassificationLevel3, productLine, productTag);
+    }
+    /**
+     * 更新数据(产品线关系)
+     */
+    @GetMapping(value="/updateSystemProductData")
+    public void updateSystemProductData(@RequestParam() String systemClassificationLevel2,String systemClassificationLevel3,String productLine,String productTag,String id) {
+        systemProductMapper.updateData(systemClassificationLevel2, systemClassificationLevel3, productLine, productTag, id);
+    }
+    /**
+     * 删除数据(产品线关系)
+     */
+    @GetMapping(value="/deleteSystemProductData")
+    public void deleteSystemProductData(@RequestParam() String id) {
+        systemProductMapper.deleteData(id);
+    }
 
     /**
      * 查询所有(处理级别)
@@ -43,5 +65,7 @@ public class CleanRelationController {
     public List<DspatchLevel> getDspatchLevelAllData() {
         return dspatchLevelMapper.getAll();
     }
+
+
 
 }
