@@ -155,10 +155,10 @@ public class CleanDataDto {
     /**
      * 主事件类型
      */
-    private String mEventType;
+    private String masterEventType;
 
     /**
      * 子事件类型
      */
-    private String sEventType;
+    private String sonEventType;
 }

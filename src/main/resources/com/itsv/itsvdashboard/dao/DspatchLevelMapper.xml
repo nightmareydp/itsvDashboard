@@ -10,9 +10,47 @@
     </select>
     <!-- 查询所有 -->
     <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.DspatchLevel" >
-        SELECT ASSIGNED_LEVEL_3_DEPARTMENT AS assignedLevel3Department,
+        SELECT id AS id,
+            ASSIGNED_LEVEL_3_DEPARTMENT AS assignedLevel3Department,
             ASSIGNED_PERSON AS assignedPerson,
             LEVEL AS level
         FROM t_dspatch_level;
     </select>
+    <!-- 新增数据(如果受派人没有填写，在默认null字符创的情况下，默认null，避免将null改为'null'字符串) -->
+    <insert id="setNewData"  parameterType="java.lang.String" >
+        INSERT INTO t_dspatch_level(
+            ASSIGNED_LEVEL_3_DEPARTMENT,
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            ASSIGNED_PERSON,
+        </if>
+            LEVEL
+        )
+        VALUES (
+            #{assignedLevel3Department},
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            #{assignedPerson},
+        </if>
+            #{level}
+        )
+    </insert>
+    <!-- 更新数据(如果受派人没有填写，在默认null字符创的情况下，默认null，避免将null改为'null'字符串) -->
+    <update id="updateData"  parameterType="java.lang.String" >
+        UPDATE
+            t_dspatch_level
+        SET
+            ASSIGNED_LEVEL_3_DEPARTMENT = #{assignedLevel3Department},
+            LEVEL = #{level}
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            ASSIGNED_PERSON=#{assignedPerson}
+        </if>
+        WHERE
+            id = #{id}
+    </update>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_dspatch_level
+        WHERE
+            id = #{id}
+    </delete>
 </mapper>

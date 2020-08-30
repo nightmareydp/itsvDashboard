@@ -36,11 +36,11 @@ public class EventType {
      * 主事件类型
      */
     @Column(name = "m_event_type")
-    private String mEventType;
+    private String masterEventType;
 
     /**
      * 子事件类型
      */
     @Column(name = "s_event_type")
-    private String sEventType;
+    private String sonEventType;
 }

@@ -26,4 +26,27 @@ public interface DspatchLevelMapper extends Mapper<DspatchLevel> {
      * @return list
      */
     List<DspatchLevel> getAll();
+
+    /**
+     * 新增数据
+     * @param assignedLevel3Department 受派三级部门
+     * @param assignedPerson 受派人
+     * @param level 分派级别
+     */
+    void setNewData(String assignedLevel3Department,String assignedPerson,String level);
+
+    /**
+     * 更新数据
+     * @param assignedLevel3Department 受派三级部门
+     * @param assignedPerson 受派人
+     * @param level 分派级别
+     * @param id id
+     */
+    void updateData(String assignedLevel3Department,String assignedPerson,String level,String id);
+
+    /**
+     * 删除数据
+     * @param id id
+     */
+    void deleteData(String id);
 }

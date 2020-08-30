@@ -3,8 +3,8 @@
 <mapper namespace="com.itsv.itsvdashboard.dao.CleanTaskHistoryMapper" >
     <!-- 记录系数操作记录 -->
     <insert id="setCleanTask" parameterType="com.itsv.itsvdashboard.domain.CleanTaskHistory" >
-        INSERT INTO t_clean_task_history (id, clean_type, date, operator, operator_erp)
-        VALUES(#{id}, #{cleanType}, #{date}, #{operator}, #{operatorErp})
+        INSERT INTO t_clean_task_history (clean_type, date, operator, operator_erp)
+        VALUES(#{cleanType}, #{date}, #{operator}, #{operatorErp})
     </insert>
     <!-- 查询上一次清洗数据时间 -->
     <select id="getLastCleanTime"  resultType="java.util.Date" >

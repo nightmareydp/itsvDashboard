@@ -37,16 +37,26 @@ public interface SystemProductMapper extends Mapper<SystemProduct> {
 
     /**
      * 新增数据
+     * @param systemClassificationLevel2 事件分类层二
+     * @param systemClassificationLevel3 事件分类层三
+     * @param productLine 产品线
+     * @param productTag 产品标签
      */
     void setNewData(String systemClassificationLevel2,String systemClassificationLevel3,String productLine,String productTag);
 
     /**
      * 更新数据
+     * @param systemClassificationLevel2 事件分类层二
+     * @param systemClassificationLevel3 事件分类层三
+     * @param productLine 产品线
+     * @param productTag 产品标签
+     * @param id id
      */
     void updateData(String systemClassificationLevel2,String systemClassificationLevel3,String productLine,String productTag,String id);
 
     /**
      * 删除数据
+     * @param id id
      */
     void deleteData(String id);
 

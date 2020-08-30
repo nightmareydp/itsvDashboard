@@ -16,7 +16,7 @@
             , #{item.eventClassificationLevel2}, #{item.eventClassificationLevel3}, #{item.submissionTime}, #{item.resolutionTime}, #{item.submissionDate}
             , #{item.submissionHours}, #{item.todayNine}, #{item.nextWorkDay}, #{item.submissionTimeNew}, #{item.processingTime}
             , #{item.dateType}, #{item.sSla}, #{item.isOk}, #{item.satisfied}, #{item.level}
-            , #{item.productLine}, #{item.productTag}, #{item.newSource}, #{item.mEventType}, #{item.sEventType})
+            , #{item.productLine}, #{item.productTag}, #{item.newSource}, #{item.masterEventType}, #{item.sonEventType})
         </foreach>
         ON DUPLICATE KEY UPDATE
             id=values(id),

@@ -2,17 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.itsv.itsvdashboard.dao.EventTypeMapper" >
     <!--计算主事件类型 -->
-    <select id="getMEventType"  resultType="java.lang.String"  parameterType="java.lang.String" >
-        SELECT m_event_type AS mEventType
+    <select id="getMasterEventType"  resultType="java.lang.String"  parameterType="java.lang.String" >
+        SELECT m_event_type AS masterEventType
         FROM t_event_type
         WHERE event_classification_level_2 = #{eventClassificationLevel2}
         	AND event_classification_level_3 = #{eventClassificationLevel3};
     </select>
     <!--计算子事件类型 -->
-    <select id="getSEventType"  resultType="java.lang.String"  parameterType="java.lang.String" >
-        SELECT s_event_type AS sEventType
+    <select id="getSonEventType"  resultType="java.lang.String"  parameterType="java.lang.String" >
+        SELECT s_event_type AS sonEventType
         FROM t_event_type
         WHERE event_classification_level_2 = #{eventClassificationLevel2}
         	AND event_classification_level_3 = #{eventClassificationLevel3};
     </select>
+    <!-- 查询所有 -->
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.EventType" >
+        SELECT id AS id,
+            event_classification_level_2 AS eventClassificationLevel2,
+            event_classification_level_3 AS eventClassificationLevel3,
+            m_event_type AS masterEventType,
+            s_event_type AS sonEventType
+        FROM t_event_type;
+    </select>
+    <!-- 新增数据 -->
+    <insert id="setNewData"  parameterType="java.lang.String" >
+        INSERT INTO t_event_type(
+            event_classification_level_2,
+            event_classification_level_3,
+            m_event_type,
+            s_event_type
+        )
+        VALUES (
+            #{eventClassificationLevel2},
+            #{eventClassificationLevel3},
+            #{masterEventType},
+            #{sonEventType}
+        )
+    </insert>
+    <!-- 更新数据 -->
+    <update id="updateData"  parameterType="java.lang.String" >
+        UPDATE
+            t_event_type
+        SET
+            event_classification_level_2 = #{eventClassificationLevel2},
+            event_classification_level_3 = #{eventClassificationLevel3},
+            m_event_type = #{masterEventType},
+            s_event_type = #{sonEventType}
+        WHERE
+            id = #{id}
+    </update>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_event_type
+        WHERE
+            id = #{id}
+    </delete>
 </mapper>

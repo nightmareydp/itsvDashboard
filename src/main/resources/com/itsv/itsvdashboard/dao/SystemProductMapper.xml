@@ -39,7 +39,7 @@
             #{productTag}
         )
     </insert>
-    <!-- 新增数据 -->
+    <!-- 更新数据 -->
     <update id="updateData"  parameterType="java.lang.String" >
         UPDATE
             t_system_product

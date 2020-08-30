@@ -83,13 +83,13 @@ public class CleanDataServiceImpl implements CleanDataService {
             cleanDataDto.setNewSource(newSource);
 
             //计算主事件类型、子事件类型(默认其他)
-            String mEventTypeTemp = eventTypeMapper.getMEventType(cleanDataDto.getEventClassificationLevel2(),cleanDataDto.getEventClassificationLevel3());
-            String sEventTypeTemp  = eventTypeMapper.getSEventType(cleanDataDto.getEventClassificationLevel2(),cleanDataDto.getEventClassificationLevel3());
-            String mEventType = mEventTypeTemp == null ? "咨询、建议" : mEventTypeTemp;
-            String sEventType = sEventTypeTemp == null ? "咨询" : sEventTypeTemp;
+            String masterEventTypeTemp = eventTypeMapper.getMasterEventType(cleanDataDto.getEventClassificationLevel2(),cleanDataDto.getEventClassificationLevel3());
+            String sonEventTypeTemp  = eventTypeMapper.getSonEventType(cleanDataDto.getEventClassificationLevel2(),cleanDataDto.getEventClassificationLevel3());
+            String masterEventType = masterEventTypeTemp == null ? "咨询、建议" : masterEventTypeTemp;
+            String sonEventType = sonEventTypeTemp == null ? "咨询" : sonEventTypeTemp;
             //赋值主事件类型、子事件类型
-            cleanDataDto.setMEventType(mEventType);
-            cleanDataDto.setSEventType(sEventType);
+            cleanDataDto.setMasterEventType(masterEventType);
+            cleanDataDto.setSonEventType(sonEventType);
 
             /*计算日期类型
              *计算当日9点
