@@ -21,26 +21,26 @@ public class Sla {
     private Integer id;
 
     /**
-     * 分派级别
+     * 产品线（清洗后）
      */
-    @Column(name = "l_level")
-    private String lLevel;
+    @Column(name = "product_line")
+    private String productLine;
 
     /**
      * 优先级别
      */
     @Column(name = "p_level")
-    private String pLevel;
+    private String priorityLevel;
 
     /**
      * 响应标准时长
      */
     @Column(name = "m_sla")
-    private String mSla;
+    private String masterSla;
 
     /**
      * 处理标准时长
      */
     @Column(name = "s_sla")
-    private Integer sSla;
+    private String sonSla;
 }

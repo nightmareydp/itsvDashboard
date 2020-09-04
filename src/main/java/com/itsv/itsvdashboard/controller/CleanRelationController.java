@@ -2,9 +2,11 @@ package com.itsv.itsvdashboard.controller;
 
 import com.itsv.itsvdashboard.dao.DspatchLevelMapper;
 import com.itsv.itsvdashboard.dao.EventTypeMapper;
+import com.itsv.itsvdashboard.dao.SlaMapper;
 import com.itsv.itsvdashboard.dao.SystemProductMapper;
 import com.itsv.itsvdashboard.domain.DspatchLevel;
 import com.itsv.itsvdashboard.domain.EventType;
+import com.itsv.itsvdashboard.domain.Sla;
 import com.itsv.itsvdashboard.domain.SystemProduct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +33,11 @@ public class CleanRelationController {
     private EventTypeMapper eventTypeMapper;
     @Resource
     private DspatchLevelMapper dspatchLevelMapper;
+    @Resource
+    private SlaMapper slaMapper;
 
 
-
+    //---------产品线关系---------
     /**
      * 查询所有(产品线关系)
      */
@@ -63,6 +67,7 @@ public class CleanRelationController {
         systemProductMapper.deleteData(id);
     }
 
+    //---------事件分类关系---------
     /**
      * 查询所有(事件分类关系)
      */
@@ -92,6 +97,7 @@ public class CleanRelationController {
         eventTypeMapper.deleteData(id);
     }
 
+    //---------处理级别---------
     /**
      * 查询所有(处理级别)
      */
@@ -119,6 +125,36 @@ public class CleanRelationController {
     @GetMapping(value="/deleteDspatchLevelData")
     public void deleteDspatchLevelData(@RequestParam() String id) {
         dspatchLevelMapper.deleteData(id);
+    }
+
+    //---------处理标准时长---------
+    /**
+     * 查询所有(处理标准时长)
+     */
+    @GetMapping(value="/getSlaAllData")
+    public List<Sla> getSlaAllData() {
+        return slaMapper.getAll();
+    }
+    /**
+     * 新增数据(处理标准时长)
+     */
+    @GetMapping(value="/setSlaNewData")
+    public void setSlaNewData(@RequestParam() String productLine,String priorityLevel,String masterSla,String sonSla) {
+        slaMapper.setNewData(productLine, priorityLevel, masterSla ,sonSla);
+    }
+    /**
+     * 更新数据(处理标准时长)
+     */
+    @GetMapping(value="/updateSlaData")
+    public void updateSlaData(@RequestParam() String productLine,String priorityLevel,String masterSla,String sonSla,String id) {
+        slaMapper.updateData(productLine, priorityLevel, masterSla ,sonSla, id);
+    }
+    /**
+     * 删除数据(处理标准时长)
+     */
+    @GetMapping(value="/deleteSlaData")
+    public void deleteSlaData(@RequestParam() String id) {
+        slaMapper.deleteData(id);
     }
 
 

@@ -61,12 +61,6 @@ public class CleanDataServiceImpl implements CleanDataService {
             //赋值分派级别
             cleanDataDto.setLevel(level);
 
-            //计算标准处理时长(默认72)
-            Integer sSlaTemp = slaMapper.getSSla(level,cleanDataDto.getPriority());
-            Integer sSla = sSlaTemp == null ? 72 : sSlaTemp;
-            //赋值标准处理时长
-            cleanDataDto.setSSla(sSla);
-
             //计算产品线、产品标签(默认其他)
             String productLineTemp = systemProductMapper.getProductLine(cleanDataDto.getSystemClassificationLevel2(),cleanDataDto.getSystemClassificationLevel3());
             String productTagTemp  = systemProductMapper.getProductTag(cleanDataDto.getSystemClassificationLevel2(),cleanDataDto.getSystemClassificationLevel3());
@@ -75,6 +69,12 @@ public class CleanDataServiceImpl implements CleanDataService {
             //赋值产品线、产品标签
             cleanDataDto.setProductLine(productLine);
             cleanDataDto.setProductTag(productTag);
+
+            //计算标准处理时长(默认72)
+            Integer sonSlaTemp = Integer.valueOf(slaMapper.getSonSla(productLine,cleanDataDto.getPriority()));
+            Integer sonSla = sonSlaTemp == null ? 72 : sonSlaTemp;
+            //赋值标准处理时长
+            cleanDataDto.setSSla(sonSla);
 
             //计算报告来源(默认自助)
             String newSourceTemp = reportSourceMapper.getReportSource(cleanDataDto.getReportSource());
@@ -128,7 +128,7 @@ public class CleanDataServiceImpl implements CleanDataService {
             //结算解决时长(转化为小时计算)
             Double processingTime = Double.valueOf((resolutionTime.getTime() - submissionTimeNew.getTime())) / (1000 * 60 * 60);
             cleanDataDto.setProcessingTime(processingTime);
-            if (processingTime <= sSla ){
+            if (processingTime <= sonSla ){
                 cleanDataDto.setIsOk("达标");
             }else {
                 cleanDataDto.setIsOk("未达标");

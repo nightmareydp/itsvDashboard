@@ -7,6 +7,13 @@ spring:
       # >= 6.x com.mysql.cj.jdbc.Driver
       # <= 5.x com.mysql.jdbc.Driver
       driver-class-name: com.mysql.cj.jdbc.Driver
+#  datasource2:
+#    url: jdbc:sqlserver://10.176.16.90:1433;DatabaseName=BNSY-SIS
+#    hikari:
+#      username: root
+#      password: itsv
+#      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
 
 
 server:
