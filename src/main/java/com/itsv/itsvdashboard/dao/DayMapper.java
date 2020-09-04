@@ -1,9 +1,11 @@
 package com.itsv.itsvdashboard.dao;
 
 import com.itsv.itsvdashboard.domain.Day;
+import com.itsv.itsvdashboard.dto.DayDto;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author yuduopeng
@@ -33,4 +35,45 @@ public interface DayMapper extends Mapper<Day> {
      * @return 下一个工作日(9点)
      */
     Date getNextWorkDay(Date date);
+
+    /**
+     * 计算两个日期之间非工作日天数
+     * @param beginDate 开始时间
+     * @param endDate 结束时间
+     * @return 非工作日天数
+     */
+    Integer getNotWorkDays(Date beginDate, Date endDate);
+
+    /**
+     * 查询所有
+     * @return list
+     */
+    List<DayDto> getAll();
+
+    /**
+     * 新增数据
+     * @param date 日期
+     * @param dateType 日期类型
+     * @param week 星期
+     * @param defaultWeek 正常周
+     * @param operationWeek 运维周
+     */
+    void setNewData(Date date,String dateType,String week,String defaultWeek,String operationWeek);
+
+    /**
+     * 更新数据
+     * @param date 日期
+     * @param dateType 日期类型
+     * @param week 星期
+     * @param defaultWeek 正常周
+     * @param operationWeek 运维周
+     * @param id id
+     */
+    void updateData(Date date,String dateType,String week,String defaultWeek,String operationWeek,String id);
+
+    /**
+     * 删除数据
+     * @param id id
+     */
+    void deleteData(String id);
 }

@@ -32,4 +32,22 @@ public class Day {
      */
     @Column(name = "date_type")
     private String dateType;
+
+    /**
+     * 星期
+     */
+    @Column(name = "week")
+    private String week;
+
+    /**
+     * 正常周
+     */
+    @Column(name = "default_week")
+    private String defaultWeek;
+
+    /**
+     * 运维周
+     */
+    @Column(name = "operation_week")
+    private String operationWeek;
 }

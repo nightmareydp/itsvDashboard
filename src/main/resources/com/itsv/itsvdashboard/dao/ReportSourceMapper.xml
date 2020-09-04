@@ -7,4 +7,39 @@
         FROM t_report_source
         WHERE report_source = #{reportSource};
     </select>
+    <!-- 查询所有 -->
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.ReportSource" >
+        SELECT id AS id,
+            report_source AS reportSource,
+            new_source AS newSource
+        FROM t_report_source;
+    </select>
+    <!-- 新增数据 -->
+    <insert id="setNewData"  parameterType="java.lang.String" >
+        INSERT INTO t_report_source(
+            report_source,
+            new_source
+        )
+        VALUES (
+            #{reportSource},
+            #{newSource}
+        )
+    </insert>
+    <!-- 更新数据 -->
+    <update id="updateData"  parameterType="java.lang.String" >
+        UPDATE
+            t_report_source
+        SET
+            report_source = #{reportSource},
+            new_source = #{newSource}
+        WHERE
+            id = #{id}
+    </update>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_report_source
+        WHERE
+            id = #{id}
+    </delete>
 </mapper>

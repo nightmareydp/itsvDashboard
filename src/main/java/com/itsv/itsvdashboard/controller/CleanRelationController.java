@@ -1,13 +1,8 @@
 package com.itsv.itsvdashboard.controller;
 
-import com.itsv.itsvdashboard.dao.DspatchLevelMapper;
-import com.itsv.itsvdashboard.dao.EventTypeMapper;
-import com.itsv.itsvdashboard.dao.SlaMapper;
-import com.itsv.itsvdashboard.dao.SystemProductMapper;
-import com.itsv.itsvdashboard.domain.DspatchLevel;
-import com.itsv.itsvdashboard.domain.EventType;
-import com.itsv.itsvdashboard.domain.Sla;
-import com.itsv.itsvdashboard.domain.SystemProduct;
+import com.itsv.itsvdashboard.dao.*;
+import com.itsv.itsvdashboard.domain.*;
+import com.itsv.itsvdashboard.dto.DayDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,7 +32,11 @@ public class CleanRelationController {
     @Resource
     private DspatchLevelMapper dspatchLevelMapper;
     @Resource
+    private ReportSourceMapper reportSourceMapper;
+    @Resource
     private SlaMapper slaMapper;
+    @Resource
+    private DayMapper dayMapper;
 
 
     //---------产品线关系---------
@@ -157,6 +159,79 @@ public class CleanRelationController {
         slaMapper.deleteData(id);
     }
 
+    //---------报告来源---------
+    /**
+     * 查询所有(报告来源)
+     */
+    @GetMapping(value="/getReportSourceAllData")
+    public List<ReportSource> getReportSourceAllData() {
+        return reportSourceMapper.getAll();
+    }
+    /**
+     * 新增数据(报告来源)
+     */
+    @GetMapping(value="/setReportSourceNewData")
+    public void setReportSourceNewData(@RequestParam() String reportSource,String newSource) {
+        reportSourceMapper.setNewData(reportSource, newSource);
+    }
+    /**
+     * 更新数据(报告来源)
+     */
+    @GetMapping(value="/updateReportSourceData")
+    public void updateReportSourceData(@RequestParam() String reportSource,String newSource,String id) {
+        reportSourceMapper.updateData(reportSource, newSource, id);
+    }
+    /**
+     * 删除数据(报告来源)
+     */
+    @GetMapping(value="/deleteReportSourceData")
+    public void deleteReportSourceData(@RequestParam() String id) {
+        reportSourceMapper.deleteData(id);
+    }
+
+    //---------日历---------
+    /**
+     * 查询所有(日历)
+     */
+    @GetMapping(value="/getDayAllData")
+    public List<DayDto> getDayAllData() {
+        return dayMapper.getAll();
+    }
+    /**
+     * 新增数据(日历)
+     */
+    @GetMapping(value="/setDayNewData")
+    public void setDayNewData(@RequestParam() String date,String dateType,String week,String defaultWeek,String operationWeek) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateTemp = null;
+        try {
+            dateTemp = simpleDateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dayMapper.setNewData(dateTemp, dateType, week, defaultWeek, operationWeek);
+    }
+    /**
+     * 更新数据(日历)
+     */
+    @GetMapping(value="/updateDayData")
+    public void updateDayData(@RequestParam() String date, String dateType, String week, String defaultWeek, String operationWeek, String id) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date dateTemp = null;
+        try {
+            dateTemp = simpleDateFormat.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        dayMapper.updateData(dateTemp, dateType, week, defaultWeek, operationWeek, id);
+    }
+    /**
+     * 删除数据(日历)
+     */
+    @GetMapping(value="/deleteDayData")
+    public void deleteDayData(@RequestParam() String id) {
+        dayMapper.deleteData(id);
+    }
 
 
 }

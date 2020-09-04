@@ -21,4 +21,60 @@
         	AND date_type = '工作日'
         LIMIT 1
     </select>
+    <!-- 计算两个日期之间非工作日天数 -->
+    <select id="getNotWorkDays"  resultType="java.lang.Integer"  parameterType="java.util.Date" >
+        SELECT count(date_type)
+        FROM t_day
+        WHERE date_type IN ('休息日','节假日')
+                AND date
+            BETWEEN #{beginDate}
+                AND #{endDate}
+    </select>
+    <!-- 查询所有 -->
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.dto.DayDto" >
+        SELECT id AS id,
+            date AS date,
+            date_type AS dateType,
+            week AS week,
+            default_week AS defaultWeek,
+            operation_week AS operationWeek
+        FROM t_day;
+    </select>
+    <!-- 新增数据 -->
+    <insert id="setNewData" >
+        INSERT INTO t_day(
+            date,
+            date_type,
+            week,
+            default_week,
+            operation_week
+        )
+        VALUES (
+            #{date},
+            #{dateType},
+            #{week},
+            #{defaultWeek},
+            #{operationWeek}
+        )
+    </insert>
+    <!-- 更新数据 -->
+    <update id="updateData" >
+        UPDATE
+            t_day
+        SET
+            date = #{date},
+            date_type = #{dateType},
+            week = #{week},
+            default_week = #{defaultWeek},
+            operation_week = #{operationWeek}
+        WHERE
+            id = #{id}
+    </update>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_day
+        WHERE
+            id = #{id}
+    </delete>
 </mapper>
