@@ -6,7 +6,12 @@
         SELECT LEVEL AS level
         FROM t_dspatch_level
         WHERE ASSIGNED_LEVEL_3_DEPARTMENT = #{assignedLevel3Department}
-        	AND ASSIGNED_PERSON = #{assignedPerson};
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            AND ASSIGNED_PERSON = #{assignedPerson};
+        </if>
+        <if test="assignedPerson == null or assignedPerson == '' or assignedPerson == 'null'">
+            AND ASSIGNED_PERSON is null;
+        </if>
     </select>
     <!-- 查询所有 -->
     <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.DspatchLevel" >

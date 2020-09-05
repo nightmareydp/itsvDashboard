@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @Author yuduopeng
@@ -30,8 +32,8 @@ public class IntermediateController {
      * 清洗全量数据
      */
     @GetMapping(value="/cleanAllData")
-    public void cleanAllData() {
-        intermediateService.CleanAllData();
+    public Map<String, List> cleanAllData() {
+        return intermediateService.CleanAllData();
     }
 
     /**
@@ -39,15 +41,15 @@ public class IntermediateController {
      * 清洗当前时间至上一次洗数的数据
      */
     @GetMapping(value="/cleanToLastTimeData")
-    public void cleanToLastTimeData() {
-        intermediateService.CleanToLastTimeData();
+    public Map<String, List> cleanToLastTimeData() {
+        return intermediateService.CleanToLastTimeData();
     }
 
     /**
      * 清洗自定义时间的数据
      */
     @GetMapping(value="/cleanSetupTimeData")
-    public void cleanSetupTimeData(@RequestParam() String start, String end) throws ParseException {
+    public Map<String, List> cleanSetupTimeData(@RequestParam() String start, String end) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date stateTime = null;
         Date endTime = null;
@@ -57,6 +59,6 @@ public class IntermediateController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        intermediateService.CleanSetupTimeData(stateTime,endTime);
+        return intermediateService.CleanSetupTimeData(stateTime,endTime);
     }
 }

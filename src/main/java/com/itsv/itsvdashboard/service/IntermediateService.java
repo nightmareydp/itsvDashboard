@@ -5,6 +5,7 @@ import com.itsv.itsvdashboard.dto.TwoNumDto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author yuduopeng
@@ -20,9 +21,9 @@ public interface IntermediateService {
     List<CleanDataDto> getAllData();
     /**
      * 清洗全量数据
-     * @return CleanDataDto
+     * @return Map<String,List>
      */
-    void CleanAllData();
+    Map<String,List> CleanAllData();
 
     /**
      * 获取当前时间至上一次洗数的数据
@@ -31,9 +32,9 @@ public interface IntermediateService {
     List<CleanDataDto> getNeedColToLastTime();
     /**
      * 清洗当前时间至上一次洗数的数据
-     * @return CleanDataDto
+     * @return Map<String,List>
      */
-    void CleanToLastTimeData();
+    Map<String,List> CleanToLastTimeData();
 
     /**
      * 获取自定义时间的数据
@@ -42,9 +43,9 @@ public interface IntermediateService {
     List<CleanDataDto> getNeedColSetupTime(Date stateTime,Date endTime);
     /**
      * 清洗自定义时间的数据
-     * @return CleanDataDto
+     * @return Map<String,List>
      */
-    void CleanSetupTimeData(Date stateTime,Date endTime);
+    Map<String,List> CleanSetupTimeData(Date stateTime,Date endTime);
 
 
     /**

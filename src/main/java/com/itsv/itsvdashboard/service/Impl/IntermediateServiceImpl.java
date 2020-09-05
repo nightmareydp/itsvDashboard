@@ -13,9 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Author yuduopeng
@@ -36,6 +34,7 @@ public class IntermediateServiceImpl implements IntermediateService {
     private final CleanDataService cleanDataService;
 
 
+
     /**
      * 获取全量数据
      * @return CleanDataDto
@@ -46,13 +45,16 @@ public class IntermediateServiceImpl implements IntermediateService {
     }
     /**
      * 清洗全量数据
-     * @return CleanDataDto
+     * @return Map<String,List>
      */
     @Override
-    public void CleanAllData() {
+    public Map<String,List> CleanAllData() {
 
-        //插入数据（清洗数据（获取全量数据））
-        intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getAllData()));
+        //创建临时map接收入参
+        Map<String,List> tempMap = new HashMap<>(16);
+        tempMap = cleanDataService.cleanAllData(this.getAllData());
+        //插入数据（清洗后数据数据.中间表list）
+        intermediateMapper.setIntermediate(tempMap.get("intermediate"));
         //记录操作记录
         CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
 //        cleanTaskHistory.setId(UUID.randomUUID().toString());
@@ -61,6 +63,9 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistory.setOperator("于铎朋");
         cleanTaskHistory.setOperatorErp("yuduopeng");
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
+        //移除中间表数据，留下无对应关系list
+        tempMap.remove("intermediate");
+        return tempMap;
     }
 
     /**
@@ -76,10 +81,13 @@ public class IntermediateServiceImpl implements IntermediateService {
      * @return CleanDataDto
      */
     @Override
-    public void CleanToLastTimeData() {
+    public Map<String,List> CleanToLastTimeData() {
 
+        //创建临时map接收入参
+        Map<String,List> tempMap = new HashMap<>(16);
+        tempMap = cleanDataService.cleanAllData(this.getNeedColToLastTime());
         //插入数据（清洗数据（获取当前时间至上一次洗数的数据））
-        intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getNeedColToLastTime()));
+        intermediateMapper.setIntermediate(tempMap.get("intermediate"));
         //记录操作记录
         CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
 //        cleanTaskHistory.setId(UUID.randomUUID().toString());
@@ -88,6 +96,9 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistory.setOperator("于铎朋");
         cleanTaskHistory.setOperatorErp("yuduopeng");
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
+        //移除中间表数据，留下无对应关系list
+        tempMap.remove("intermediate");
+        return tempMap;
     }
 
     /**
@@ -103,10 +114,13 @@ public class IntermediateServiceImpl implements IntermediateService {
      * @return CleanDataDto
      */
     @Override
-    public void CleanSetupTimeData(Date stateTime,Date endTime) {
+    public Map<String,List> CleanSetupTimeData(Date stateTime,Date endTime) {
 
+        //创建临时map接收入参
+        Map<String,List> tempMap = new HashMap<>(16);
+        tempMap = cleanDataService.cleanAllData(this.getNeedColSetupTime(stateTime,endTime));
         //插入数据（清洗数据（获取自定义时间的数据））
-        intermediateMapper.setIntermediate(cleanDataService.cleanAllData(this.getNeedColSetupTime(stateTime,endTime)));
+        intermediateMapper.setIntermediate(tempMap.get("intermediate"));
         //记录操作记录
         CleanTaskHistory cleanTaskHistory = new CleanTaskHistory();
 //        cleanTaskHistory.setId(UUID.randomUUID().toString());
@@ -115,6 +129,9 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistory.setOperator("于铎朋");
         cleanTaskHistory.setOperatorErp("yuduopeng");
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
+        //移除中间表数据，留下无对应关系list
+        tempMap.remove("intermediate");
+        return tempMap;
     }
 
     /**

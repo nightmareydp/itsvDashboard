@@ -43,4 +43,12 @@ public class Sla {
      */
     @Column(name = "s_sla")
     private String sonSla;
+
+    public Sla(Integer id, String productLine, String priorityLevel, String masterSla, String sonSla) {
+        this.id = id;
+        this.productLine = productLine;
+        this.priorityLevel = priorityLevel;
+        this.masterSla = masterSla;
+        this.sonSla = sonSla;
+    }
 }

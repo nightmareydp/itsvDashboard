@@ -43,4 +43,12 @@ public class EventType {
      */
     @Column(name = "s_event_type")
     private String sonEventType;
+
+    public EventType(Integer id, String eventClassificationLevel2, String eventClassificationLevel3, String masterEventType, String sonEventType) {
+        this.id = id;
+        this.eventClassificationLevel2 = eventClassificationLevel2;
+        this.eventClassificationLevel3 = eventClassificationLevel3;
+        this.masterEventType = masterEventType;
+        this.sonEventType = sonEventType;
+    }
 }

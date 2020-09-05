@@ -3,6 +3,7 @@ package com.itsv.itsvdashboard.service;
 import com.itsv.itsvdashboard.dto.CleanDataDto;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author yuduopeng
@@ -14,8 +15,8 @@ public interface CleanDataService {
 
     /**
      * 清洗数据
-     * @return CleanDataDto
+     * @return Map<String,List>
      */
-    List<CleanDataDto> cleanAllData(List<CleanDataDto> getNeedColList);
+    Map<String,List> cleanAllData(List<CleanDataDto> getNeedColList);
 
 }

@@ -31,4 +31,10 @@ public class ReportSource {
      */
     @Column(name = "new_source")
     private String newSource;
+
+    public ReportSource(Integer id, String reportSource, String newSource) {
+        this.id = id;
+        this.reportSource = reportSource;
+        this.newSource = newSource;
+    }
 }

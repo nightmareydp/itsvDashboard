@@ -44,5 +44,11 @@ public class SystemProduct {
     @Column(name = "product_tag")
     private String productTag;
 
-
+    public SystemProduct(Integer id, String systemClassificationLevel2, String systemClassificationLevel3, String productLine, String productTag) {
+        this.id = id;
+        this.systemClassificationLevel2 = systemClassificationLevel2;
+        this.systemClassificationLevel3 = systemClassificationLevel3;
+        this.productLine = productLine;
+        this.productTag = productTag;
+    }
 }

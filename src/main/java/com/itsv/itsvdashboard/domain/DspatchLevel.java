@@ -37,4 +37,11 @@ public class DspatchLevel {
      */
     @Column(name = "LEVEL")
     private String level;
+
+    public DspatchLevel(Integer id,String assignedLevel3Department,String assignedPerson,String level){
+        this.id = id;
+        this.assignedLevel3Department = assignedLevel3Department;
+        this.assignedPerson = assignedPerson;
+        this.level = level;
+    }
 }
