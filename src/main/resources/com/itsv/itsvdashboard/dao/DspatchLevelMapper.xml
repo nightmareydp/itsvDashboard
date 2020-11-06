@@ -43,11 +43,11 @@
         UPDATE
             t_dspatch_level
         SET
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            ASSIGNED_PERSON=#{assignedPerson},
+        </if>
             ASSIGNED_LEVEL_3_DEPARTMENT = #{assignedLevel3Department},
             LEVEL = #{level}
-        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
-            ASSIGNED_PERSON=#{assignedPerson}
-        </if>
         WHERE
             id = #{id}
     </update>

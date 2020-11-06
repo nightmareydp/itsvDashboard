@@ -3,14 +3,14 @@
 <mapper namespace="com.itsv.itsvdashboard.dao.EventTypeMapper" >
     <!--计算主事件类型 -->
     <select id="getMasterEventType"  resultType="java.lang.String"  parameterType="java.lang.String" >
-        SELECT m_event_type AS masterEventType
+        SELECT DISTINCT m_event_type AS masterEventType
         FROM t_event_type
         WHERE event_classification_level_2 = #{eventClassificationLevel2}
         	AND event_classification_level_3 = #{eventClassificationLevel3};
     </select>
     <!--计算子事件类型 -->
     <select id="getSonEventType"  resultType="java.lang.String"  parameterType="java.lang.String" >
-        SELECT s_event_type AS sonEventType
+        SELECT DISTINCT s_event_type AS sonEventType
         FROM t_event_type
         WHERE event_classification_level_2 = #{eventClassificationLevel2}
         	AND event_classification_level_3 = #{eventClassificationLevel3};

@@ -43,7 +43,8 @@ public class CleanDataServiceImpl implements CleanDataService {
     @Override
     public Map<String,List> cleanAllData(List<CleanDataDto> getNeedColList) {
 
-        //创建各个对应关系list，无对应关系加入列表，返回前端提示
+        //-----创建各个对应关系list，无对应关系加入列表，返回前端提示-----
+        //创建总map
         Map<String,List> intermediateMap = new HashMap<>(16);
         //产品线list
         List<SystemProduct> systemProductList = new ArrayList<>();
@@ -61,9 +62,11 @@ public class CleanDataServiceImpl implements CleanDataService {
         for (CleanDataDto cleanDataDto:getNeedColList) {
 
             //计算满意度
-            if (cleanDataDto.getAttitudeScore() * cleanDataDto.getTimelinessScore() == 25){
+            Integer attitudeScoreTemp = cleanDataDto.getAttitudeScore() == null ? 0 : cleanDataDto.getAttitudeScore();
+            Integer timelinessScoreTemp = cleanDataDto.getTimelinessScore() == null ? 0 : cleanDataDto.getTimelinessScore();
+            if (attitudeScoreTemp * timelinessScoreTemp == 25){
                 cleanDataDto.setSatisfied("满意");
-            }else if(cleanDataDto.getAttitudeScore() * cleanDataDto.getTimelinessScore() < 16){
+            }else if(attitudeScoreTemp * timelinessScoreTemp < 16){
                 cleanDataDto.setSatisfied("不满意");
             }else{
                 cleanDataDto.setSatisfied("一般");
@@ -161,14 +164,14 @@ public class CleanDataServiceImpl implements CleanDataService {
             Date resolutionTime = cleanDataDto.getResolutionTime() == null ? new Date() : cleanDataDto.getResolutionTime();
             //计算非工作日天数
             Integer notWorkDays = dayMapper.getNotWorkDays(submissionTimeNew,resolutionTime);
-            //结算解决时长(转化为小时计算(处理时长-节假日事件)
+            //结算解决时长(转化为小时计算(处理时长-节假日时间)
             Double processingTimeTemp = Double.valueOf((resolutionTime.getTime() - submissionTimeNew.getTime())) / (1000 * 60 * 60);
             Double processingTime = processingTimeTemp - notWorkDays*24;
             cleanDataDto.setProcessingTime(processingTime);
             if (processingTime <= sonSla ){
-                cleanDataDto.setIsOk("达标");
+                cleanDataDto.setIsOk("未超时");
             }else {
-                cleanDataDto.setIsOk("未达标");
+                cleanDataDto.setIsOk("超时");
             }
 
         }
