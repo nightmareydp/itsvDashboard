@@ -45,6 +45,20 @@ public interface DayMapper extends Mapper<Day> {
     Integer getNotWorkDays(Date beginDate, Date endDate);
 
     /**
+     * 计算正常周
+     * @param date 日期
+     * @return 正常周
+     */
+    String getDefaultWeek(Date date);
+
+    /**
+     * 计算运维周
+     * @param date 日期
+     * @return 运维周
+     */
+    String getOperationWeek(Date date);
+
+    /**
      * 查询所有
      * @return list
      */

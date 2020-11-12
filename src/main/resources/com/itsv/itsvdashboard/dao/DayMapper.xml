@@ -30,6 +30,18 @@
             BETWEEN #{beginDate}
                 AND #{endDate}
     </select>
+    <!-- 计算正常周 -->
+    <select id="getDefaultWeek"  resultType="java.lang.String"  parameterType="java.util.Date" >
+        SELECT default_week AS defaultWeek
+        FROM t_day
+        WHERE date = #{date}
+    </select>
+    <!-- 计算运维周 -->
+    <select id="getOperationWeek"  resultType="java.lang.String"  parameterType="java.util.Date" >
+        SELECT operation_week AS operationWeek
+        FROM t_day
+        WHERE date = #{date}
+    </select>
     <!-- 查询所有 -->
     <select id="getAll"  resultType="com.itsv.itsvdashboard.dto.DayDto" >
         SELECT id AS id,

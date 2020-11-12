@@ -8,7 +8,7 @@
         	, event_classification_level_2, event_classification_level_3, submission_time, resolution_time, submission_date
         	, submission_hours, today_nine, next_work_day, submission_time_new, processing_time
         	, day_type, s_sla, is_ok, is_satisfied, level
-        	, product_line, product_tag, report_source_new, m_event_type, s_event_type)
+        	, product_line, product_tag, report_source_new, m_event_type, s_event_type, default_week, operation_week)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.id}, #{item.reception}, #{item.assignedPerson}, #{item.assignedLevel3Department}, #{item.priority}
@@ -16,7 +16,7 @@
             , #{item.eventClassificationLevel2}, #{item.eventClassificationLevel3}, #{item.submissionTime}, #{item.resolutionTime}, #{item.submissionDate}
             , #{item.submissionHours}, #{item.todayNine}, #{item.nextWorkDay}, #{item.submissionTimeNew}, #{item.processingTime}
             , #{item.dateType}, #{item.sSla}, #{item.isOk}, #{item.satisfied}, #{item.level}
-            , #{item.productLine}, #{item.productTag}, #{item.newSource}, #{item.masterEventType}, #{item.sonEventType})
+            , #{item.productLine}, #{item.productTag}, #{item.newSource}, #{item.masterEventType}, #{item.sonEventType}, #{item.defaultWeek}, #{item.operationWeek})
         </foreach>
         ON DUPLICATE KEY UPDATE
             id=values(id),
@@ -48,7 +48,9 @@
             product_tag=values(product_tag),
             report_source_new=values(report_source_new),
             m_event_type=values(m_event_type),
-            s_event_type=values(s_event_type);
+            s_event_type=values(s_event_type),
+            default_week=values(default_week),
+            operation_week=values(operation_week);
     </insert>
     <!--查询总量趋势 -->
     <select id="getTotalTrend"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto" >

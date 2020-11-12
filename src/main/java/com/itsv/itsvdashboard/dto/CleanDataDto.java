@@ -161,4 +161,14 @@ public class CleanDataDto {
      * 子事件类型
      */
     private String sonEventType;
+
+    /**
+     * 正常周
+     */
+    private String defaultWeek;
+
+    /**
+     * 运维周
+     */
+    private String operationWeek;
 }

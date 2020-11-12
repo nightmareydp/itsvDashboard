@@ -164,7 +164,7 @@ public class CleanDataServiceImpl implements CleanDataService {
             Date resolutionTime = cleanDataDto.getResolutionTime() == null ? new Date() : cleanDataDto.getResolutionTime();
             //计算非工作日天数
             Integer notWorkDays = dayMapper.getNotWorkDays(submissionTimeNew,resolutionTime);
-            //结算解决时长(转化为小时计算(处理时长-节假日时间)
+            //计算解决时长(转化为小时计算(处理时长-节假日时间)
             Double processingTimeTemp = Double.valueOf((resolutionTime.getTime() - submissionTimeNew.getTime())) / (1000 * 60 * 60);
             Double processingTime = processingTimeTemp - notWorkDays*24;
             cleanDataDto.setProcessingTime(processingTime);
@@ -173,6 +173,13 @@ public class CleanDataServiceImpl implements CleanDataService {
             }else {
                 cleanDataDto.setIsOk("超时");
             }
+
+            //---------计算正常周、运维周---------
+            String defaultWeek = dayMapper.getDefaultWeek(cleanDataDto.getSubmissionDate());
+            String operationWeek = dayMapper.getOperationWeek(cleanDataDto.getSubmissionDate());
+            //赋值正常周、运维周
+            cleanDataDto.setDefaultWeek(defaultWeek);
+            cleanDataDto.setOperationWeek(operationWeek);
 
         }
 
