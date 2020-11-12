@@ -21,10 +21,10 @@ public class Sla {
     private Integer id;
 
     /**
-     * 产品线（清洗后）
+     * 分派级别（清洗后）
      */
-    @Column(name = "product_line")
-    private String productLine;
+    @Column(name = "l_level")
+    private String level;
 
     /**
      * 优先级别
@@ -44,9 +44,9 @@ public class Sla {
     @Column(name = "s_sla")
     private String sonSla;
 
-    public Sla(Integer id, String productLine, String priorityLevel, String masterSla, String sonSla) {
+    public Sla(Integer id, String level, String priorityLevel, String masterSla, String sonSla) {
         this.id = id;
-        this.productLine = productLine;
+        this.level = level;
         this.priorityLevel = priorityLevel;
         this.masterSla = masterSla;
         this.sonSla = sonSla;

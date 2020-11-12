@@ -5,13 +5,13 @@
     <select id="getSonSla"  resultType="java.lang.String"  parameterType="java.lang.String" >
         SELECT s_sla AS sonSla
         FROM t_sla
-        WHERE product_line = #{productLine}
+        WHERE l_level = #{level}
         	AND p_level = #{priorityLevel};
     </select>
     <!-- 查询所有 -->
     <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.Sla" >
         SELECT id AS id,
-            product_line AS productLine,
+            l_level AS level,
             p_level AS priorityLevel,
             m_sla AS masterSla,
             s_sla AS sonSla
@@ -20,13 +20,13 @@
     <!-- 新增数据 -->
     <insert id="setNewData"  parameterType="java.lang.String" >
         INSERT INTO t_sla(
-            product_line,
+            l_level,
             p_level,
             m_sla,
             s_sla
         )
         VALUES (
-            #{productLine},
+            #{level},
             #{priorityLevel},
             #{masterSla},
             #{sonSla}
@@ -37,7 +37,7 @@
         UPDATE
             t_sla
         SET
-            product_line = #{productLine},
+            l_level = #{level},
             p_level = #{priorityLevel},
             m_sla = #{masterSla},
             s_sla = #{sonSla}

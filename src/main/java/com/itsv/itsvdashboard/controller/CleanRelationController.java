@@ -141,15 +141,15 @@ public class CleanRelationController {
      * 新增数据(处理标准时长)
      */
     @GetMapping(value="/setSlaNewData")
-    public void setSlaNewData(@RequestParam() String productLine,String priorityLevel,String masterSla,String sonSla) {
-        slaMapper.setNewData(productLine, priorityLevel, masterSla ,sonSla);
+    public void setSlaNewData(@RequestParam() String level,String priorityLevel,String masterSla,String sonSla) {
+        slaMapper.setNewData(level, priorityLevel, masterSla ,sonSla);
     }
     /**
      * 更新数据(处理标准时长)
      */
     @GetMapping(value="/updateSlaData")
-    public void updateSlaData(@RequestParam() String productLine,String priorityLevel,String masterSla,String sonSla,String id) {
-        slaMapper.updateData(productLine, priorityLevel, masterSla ,sonSla, id);
+    public void updateSlaData(@RequestParam() String level,String priorityLevel,String masterSla,String sonSla,String id) {
+        slaMapper.updateData(level, priorityLevel, masterSla ,sonSla, id);
     }
     /**
      * 删除数据(处理标准时长)

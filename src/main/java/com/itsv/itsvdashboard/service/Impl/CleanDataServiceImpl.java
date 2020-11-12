@@ -96,11 +96,11 @@ public class CleanDataServiceImpl implements CleanDataService {
             cleanDataDto.setProductTag(productTag);
 
             //---------计算标准处理时长(默认72)---------
-            Integer sonSlaTemp = Integer.valueOf(slaMapper.getSonSla(productLine,cleanDataDto.getPriority()));
+            Integer sonSlaTemp = Integer.valueOf(slaMapper.getSonSla(level,cleanDataDto.getPriority()));
             Integer sonSla = sonSlaTemp == null ? 72 : sonSlaTemp;
             //如果没有对应关系则加入列表
             if (sonSlaTemp == null){
-                slaList.add(new Sla(null,productLine,cleanDataDto.getPriority(),null,null));
+                slaList.add(new Sla(null,level,cleanDataDto.getPriority(),null,null));
             }
             //赋值标准处理时长
             cleanDataDto.setSSla(sonSla);
