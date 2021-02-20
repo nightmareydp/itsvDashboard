@@ -8,11 +8,14 @@ import com.itsv.itsvdashboard.dto.CleanDataDto;
 import com.itsv.itsvdashboard.dto.TwoNumDto;
 import com.itsv.itsvdashboard.service.CleanDataService;
 import com.itsv.itsvdashboard.service.IntermediateService;
+import com.itsv.itsvdashboard.service.NullTableService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 /**
@@ -22,8 +25,9 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @_(@Autowired))
-@Slf4j
 public class IntermediateServiceImpl implements IntermediateService {
+
+    private Logger log = Logger.getLogger(this.getClass());
 
     private final ItsvWeekTwentyThreeMapper itsvWeekTwentyThreeMapper;
 
@@ -32,6 +36,8 @@ public class IntermediateServiceImpl implements IntermediateService {
     private final CleanTaskHistoryMapper cleanTaskHistoryMapper;
 
     private final CleanDataService cleanDataService;
+
+    private final NullTableService nullTableService;
 
 
 
@@ -48,7 +54,7 @@ public class IntermediateServiceImpl implements IntermediateService {
      * @return Map<String,List>
      */
     @Override
-    public Map<String,List> CleanAllData() {
+    public Map<String,List> CleanAllData() throws NoSuchAlgorithmException {
 
         //创建临时map接收入参
         Map<String,List> tempMap = new HashMap<>(16);
@@ -65,6 +71,8 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
         //移除中间表数据，留下无对应关系list
         tempMap.remove("intermediate");
+        //将无对应关系数据入表
+        nullTableService.setNullData(tempMap);
         return tempMap;
     }
 
@@ -81,7 +89,7 @@ public class IntermediateServiceImpl implements IntermediateService {
      * @return CleanDataDto
      */
     @Override
-    public Map<String,List> CleanToLastTimeData() {
+    public Map<String,List> CleanToLastTimeData() throws NoSuchAlgorithmException {
 
         //创建临时map接收入参
         Map<String,List> tempMap = new HashMap<>(16);
@@ -98,6 +106,8 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
         //移除中间表数据，留下无对应关系list
         tempMap.remove("intermediate");
+        //将无对应关系数据入表
+        nullTableService.setNullData(tempMap);
         return tempMap;
     }
 
@@ -114,7 +124,7 @@ public class IntermediateServiceImpl implements IntermediateService {
      * @return CleanDataDto
      */
     @Override
-    public Map<String,List> CleanSetupTimeData(Date stateTime,Date endTime) {
+    public Map<String,List> CleanSetupTimeData(Date stateTime,Date endTime) throws NoSuchAlgorithmException {
 
         //创建临时map接收入参
         Map<String,List> tempMap = new HashMap<>(16);
@@ -131,6 +141,8 @@ public class IntermediateServiceImpl implements IntermediateService {
         cleanTaskHistoryMapper.setCleanTask(cleanTaskHistory);
         //移除中间表数据，留下无对应关系list
         tempMap.remove("intermediate");
+        //将无对应关系数据入表
+        nullTableService.setNullData(tempMap);
         return tempMap;
     }
 

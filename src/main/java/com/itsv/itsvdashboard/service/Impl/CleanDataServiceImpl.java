@@ -6,6 +6,7 @@ import com.itsv.itsvdashboard.dto.CleanDataDto;
 import com.itsv.itsvdashboard.service.CleanDataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,9 @@ import java.util.*;
  */
 @Service
 @RequiredArgsConstructor(onConstructor = @_(@Autowired))
-@Slf4j
 public class CleanDataServiceImpl implements CleanDataService {
+
+    private Logger log = Logger.getLogger(this.getClass());
 
     private final DspatchLevelMapper dspatchLevelMapper;
 
@@ -58,6 +60,7 @@ public class CleanDataServiceImpl implements CleanDataService {
         List<EventType> eventTypeList = new ArrayList<>();
 
 
+        log.info("开始清洗数据");
         //遍历列表，执行系数逻辑
         for (CleanDataDto cleanDataDto:getNeedColList) {
 
@@ -182,6 +185,7 @@ public class CleanDataServiceImpl implements CleanDataService {
             cleanDataDto.setOperationWeek(operationWeek);
 
         }
+        log.info("清洗数据完成");
 
         //将各个list放入map中
         intermediateMap.put("intermediate",getNeedColList);

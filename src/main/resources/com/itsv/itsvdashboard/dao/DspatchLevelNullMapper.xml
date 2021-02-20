@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.DspatchLevelNullMapper" >
+
+    <!-- 查询所有 -->
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.DspatchLevelNull" >
+        SELECT id AS id,
+            ASSIGNED_LEVEL_3_DEPARTMENT AS assignedLevel3Department,
+            ASSIGNED_PERSON AS assignedPerson
+        FROM t_dspatch_level_null;
+    </select>
+    <!-- 新增数据(如果受派人没有填写，在默认null字符串的情况下，默认null，避免将null改为'null'字符串) -->
+    <insert id="setNewData"  parameterType="java.lang.String" >
+        INSERT INTO t_dspatch_level_null(
+        id,
+        ASSIGNED_LEVEL_3_DEPARTMENT,
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            ASSIGNED_PERSON
+        </if>
+        )
+        VALUES (
+        #{id},
+        #{assignedLevel3Department},
+        <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">
+            #{assignedPerson}
+        </if>
+        )
+        ON DUPLICATE KEY UPDATE
+            id=values(id),
+            ASSIGNED_LEVEL_3_DEPARTMENT=values(ASSIGNED_LEVEL_3_DEPARTMENT),
+            ASSIGNED_PERSON=values(ASSIGNED_PERSON)
+    </insert>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_dspatch_level_null
+        WHERE
+            id = #{id}
+    </delete>
+</mapper>

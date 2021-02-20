@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itsv.itsvdashboard.dao.ReportSourceNullMapper" >
+    <!-- 查询所有 -->
+    <select id="getAll"  resultType="com.itsv.itsvdashboard.domain.ReportSourceNull" >
+        SELECT id AS id,
+            report_source AS reportSource
+        FROM t_report_source_null;
+    </select>
+    <!-- 新增数据 -->
+    <insert id="setNewData"  parameterType="java.lang.String" >
+        INSERT INTO t_report_source_null(
+            id,
+            report_source
+        )
+        VALUES (
+            #{id},
+            #{reportSource}
+        )
+        ON DUPLICATE KEY UPDATE
+            id=values(id),
+            report_source=values(report_source)
+    </insert>
+    <!-- 删除数据 -->
+    <delete id="deleteData"  parameterType="java.lang.String" >
+        DELETE FROM
+            t_report_source_null
+        WHERE
+            id = #{id}
+    </delete>
+</mapper>

@@ -3,6 +3,7 @@ package com.itsv.itsvdashboard.service;
 import com.itsv.itsvdashboard.dto.CleanDataDto;
 import com.itsv.itsvdashboard.dto.TwoNumDto;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface IntermediateService {
      * 清洗全量数据
      * @return Map<String,List>
      */
-    Map<String,List> CleanAllData();
+    Map<String,List> CleanAllData() throws NoSuchAlgorithmException;
 
     /**
      * 获取当前时间至上一次洗数的数据
@@ -34,7 +35,7 @@ public interface IntermediateService {
      * 清洗当前时间至上一次洗数的数据
      * @return Map<String,List>
      */
-    Map<String,List> CleanToLastTimeData();
+    Map<String,List> CleanToLastTimeData() throws NoSuchAlgorithmException;
 
     /**
      * 获取自定义时间的数据
@@ -45,7 +46,7 @@ public interface IntermediateService {
      * 清洗自定义时间的数据
      * @return Map<String,List>
      */
-    Map<String,List> CleanSetupTimeData(Date stateTime,Date endTime);
+    Map<String,List> CleanSetupTimeData(Date stateTime,Date endTime) throws NoSuchAlgorithmException;
 
 
     /**
