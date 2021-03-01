@@ -67,4 +67,16 @@ public interface IntermediateService {
      */
     List<TwoNumDto> getSla();
 
+    /**
+     * 获取各产品线SLA
+     * @return List<TwoNumDto>
+     */
+    List<TwoNumDto> getEveSla();
+
+    /**
+     * 获取指定产品线top3标签的事件分类
+     * @return Map<String,List>
+     */
+    Map<String,List> getProductEventType(String productLine);
+
 }

@@ -3,7 +3,7 @@
 <mapper namespace="com.itsv.itsvdashboard.dao.DspatchLevelMapper" >
     <!--查询分派级别 -->
     <select id="getLevel"  resultType="java.lang.String"  parameterType="java.lang.String" >
-        SELECT LEVEL AS level
+        SELECT DISTINCT LEVEL AS level
         FROM t_dspatch_level
         WHERE ASSIGNED_LEVEL_3_DEPARTMENT = #{assignedLevel3Department}
         <if test="assignedPerson != null and assignedPerson != '' and assignedPerson != 'null'">

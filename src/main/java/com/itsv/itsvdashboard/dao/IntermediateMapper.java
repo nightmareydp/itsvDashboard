@@ -40,4 +40,30 @@ public interface IntermediateMapper extends Mapper<Intermediate> {
      */
     List<TwoNumDto> getSla();
 
+    /**
+     * 获取各产品线SLA(全部)
+     * @return List<TwoNumDto>
+     */
+    List<TwoNumDto> getEveryPSla();
+
+    /**
+     * 获取各产品线SLA(未超时)
+     * @return List<TwoNumDto>
+     */
+    List<TwoNumDto> getEveryPOkSla();
+
+    /**
+     * 获取指定产品线top3标签
+     * @param productLine 产品线
+     * @return TOP3产品标签
+     */
+    List<String> getTopProductTag(String productLine);
+
+    /**
+     * 获取指定产品标签的事件分类
+     * @param productTag 产品标签
+     * @return List<TwoNumDto>
+     */
+    List<TwoNumDto> getEventType(String productTag);
+
 }

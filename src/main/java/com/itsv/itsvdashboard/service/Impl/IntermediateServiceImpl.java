@@ -173,5 +173,98 @@ public class IntermediateServiceImpl implements IntermediateService {
         return intermediateMapper.getSla();
     }
 
+    /**
+     * 获取各产品线SLA
+     * @return
+     */
+    @Override
+    public List<TwoNumDto> getEveSla() {
+        List<TwoNumDto> allList = intermediateMapper.getEveryPSla();
+        List<TwoNumDto> okList = intermediateMapper.getEveryPOkSla();
+        ArrayList resultList = new ArrayList();
+        for (int i =0;i<okList.size();i++){
+            TwoNumDto t = new TwoNumDto();
+            int all = allList.get(i).getNum();
+            int ok = okList.get(i).getNum();
+            int n = (ok*1000/all);
+            t.setName(okList.get(i).getName());
+            t.setNum(n);
+            resultList.add(t);
+        }
+        return resultList;
+    }
 
+    @Override
+    public Map<String, List> getProductEventType(String productLine) {
+        //创建最终结果map与List
+        List<String> nameList = new ArrayList<>();
+        //咨询、建议
+        List<Integer> askList = new ArrayList<>();
+        //日常维护
+        List<Integer> sosoList = new ArrayList<>();
+        //系统问题
+        List<Integer> problemList = new ArrayList<>();
+        Map resultMap = new HashMap<String, List>();
+        //获取TOP3产品标签
+        List<String> lineList = intermediateMapper.getTopProductTag(productLine);
+        //遍历list，过去事件分类
+        for (String s:lineList) {
+            nameList.add(s);
+            //获取指定产品标签的事件分类
+            List<TwoNumDto> tempList = intermediateMapper.getEventType(s);
+            switch (tempList.size()){
+                case 3 :
+                    problemList.add(tempList.get(0).getNum());
+                    sosoList.add(tempList.get(1).getNum());
+                    askList.add(tempList.get(2).getNum());
+                    break;
+                case 2 :
+                    if("日常维护".equals(tempList.get(0).getName())){
+                        problemList.add(0);
+                        sosoList.add(tempList.get(0).getNum());
+                        askList.add(tempList.get(1).getNum());
+                        break;
+                    }else if("日常维护".equals(tempList.get(1).getName())){
+                        problemList.add(tempList.get(0).getNum());
+                        sosoList.add(tempList.get(1).getNum());
+                        askList.add(0);
+                        break;
+                    }else {
+                        problemList.add(tempList.get(0).getNum());
+                        sosoList.add(0);
+                        askList.add(tempList.get(1).getNum());
+                        break;
+                    }
+                case 1 :
+                    switch (tempList.get(0).getName()){
+                        case "系统问题" :
+                            problemList.add(tempList.get(0).getNum());
+                            sosoList.add(0);
+                            askList.add(0);
+                            break;
+                        case "日常维护" :
+                            problemList.add(0);
+                            sosoList.add(tempList.get(0).getNum());
+                            askList.add(0);
+                            break;
+                        case "咨询、建议" :
+                            problemList.add(0);
+                            sosoList.add(0);
+                            askList.add(tempList.get(0).getNum());
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        //合并数据
+        resultMap.put("nameList",nameList);
+        resultMap.put("problemList",problemList);
+        resultMap.put("sosoList",sosoList);
+        resultMap.put("askList",askList);
+
+        return resultMap;
+    }
 }
+
+

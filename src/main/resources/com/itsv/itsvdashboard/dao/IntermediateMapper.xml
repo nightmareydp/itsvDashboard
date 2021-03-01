@@ -74,4 +74,62 @@
         FROM t_intermediate
         GROUP BY is_ok;
     </select>
+    <!--获取各产品线SLA(全部) -->
+    <select id="getEveryPSla"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto">
+        SELECT
+	        product_line AS name,
+	        count(1) AS num
+        FROM
+        	t_intermediate
+        GROUP BY
+	        product_line
+        ORDER BY
+	        product_line;
+    </select>
+    <!--获取各产品线SLA(未超时) -->
+    <select id="getEveryPOkSla"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto">
+        SELECT
+        	product_line AS name,
+        	count(1) AS num
+        FROM
+        	t_intermediate
+        WHERE
+        	is_ok = '未超时'
+        GROUP BY
+        	product_line
+        ORDER BY
+        	product_line;
+    </select>
+    <!--获取指定产品线top3标签-->
+    <select id="getTopProductTag"  resultType="java.lang.String"  parameterType="java.lang.String">
+        SELECT
+        	product_tag
+        FROM
+        	t_intermediate
+        WHERE
+        	product_line = #{productLine}
+        GROUP BY
+        	product_tag
+        ORDER BY
+        	count(1) DESC
+        LIMIT 3;
+    </select>
+    <!--获取指定产品标签的事件分类-->
+    <select id="getEventType"  resultType="com.itsv.itsvdashboard.dto.TwoNumDto"  parameterType="java.lang.String">
+        SELECT
+            m_event_type AS name,
+        	count(1) AS num
+        FROM
+        	t_intermediate
+        WHERE
+        	product_tag = #{productTag}
+        GROUP BY
+        	m_event_type
+        HAVING
+        	m_event_type IN ( '系统问题', '咨询、建议', '日常维护' )
+        ORDER BY
+        	m_event_type DESC
+    </select>
+
+
 </mapper>
